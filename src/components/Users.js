@@ -3,13 +3,15 @@ import React, { useEffect, useState } from "react";
 import { useNavigate,Link } from "react-router-dom";
 
 
-export default function Users(){
+export default function Users({count}){
     const[users,setUsers]=useState([])
 
-const getuserDetails=()=>{
-    axios.get("https://629ef6b78b939d3dc28b227c.mockapi.io/usersapi")
+
+const getuserDetails=async ()=>{
+   await axios.get("https://629ef6b78b939d3dc28b227c.mockapi.io/usersapi")
     .then((res)=>{
         setUsers(res.data)
+        console.log(res.data)
 
     })
     .catch((error)=>{
@@ -19,15 +21,14 @@ const getuserDetails=()=>{
 
 useEffect( ()=>{
     getuserDetails()
-},[]);
+    console.log(users)
+},[count]);
 
     return(
         
             <div className="container">
                  <p className="tablecaption">Users</p>
-             <table className="userstable">
-                  
-                
+             <table className="userstable">    
                      <thead>
                        <tr id='tr'>
                            <th id='th'>Id</th>
@@ -41,7 +42,8 @@ useEffect( ()=>{
                        </tr>
                      </thead>
                 
-              {  
+               {  
+                
                 users.map((user)=>{
                     return(
                     
@@ -50,19 +52,20 @@ useEffect( ()=>{
                            <td id='td'>{user.firstName}</td>
                            <td id='td'>{user.lastName}</td>
                            <td id='td'>{user.Email}</td>
-                           <td id='td'>{user.phoneNumber}</td>
+                           <td id='td'>{user.phoneNumber}</td> 
                            <td id='td'>{user.city}</td>
                            <td id='td'>{user.state}</td>
-                           <td id='td'>
+                            <td id='td'>
                             <Link key={user.id} to={`/profile/${user.id}`}>
                              <span><i class="fa-solid fa-eye fa-fw"></i></span>
                              </Link> 
-                           </td>
+                           </td>   
                    </tr>
                     )
                 })
-                
-              }
+               
+                 
+               }
               
               </table>
             </div>  

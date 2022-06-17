@@ -9,37 +9,27 @@ import Users from "./Users";
  import EditUser from "./EditUser";
 
 export default function Body(){
-    const[users,setUsers]=useState({})
 
-       const getUsers=()=>{
-        axios.get("https://629ef6b78b939d3dc28b227c.mockapi.io/usersapi")
-        .then((res)=>{
-            setUsers(res.data)
-            console.log(res.data)
-            console.log(users)
-        })
-        .catch((error)=>{
-            console.log(error)
-        })
-        }
+      const [count,setCount]=useState(0)
+ 
+
     
-      useEffect(()=>{
-           getUsers()
-      },[])
-      const getUserById=(id)=>
-      {
-           return users.find(user=>user.id===id)
-      }
+
+
+    const updateCount=(value)=>{
+        setCount(value)
+    }
 
     return(
-       
+           <div>      
             <Routes>
-                <Route path='/dashboard'element={<Dashboard/>}></Route>   
-                <Route path="/create-user"    element={<CreateUser/>}></Route>
-                <Route path='/users' element={<Users/>}></Route>
-                <Route path='/profile/:id' element={<Profile getUserById={getUserById}/>}></Route>
-                <Route path='/edit-user/:id' element={<EditUser getUserById={getUserById}/>}></Route>
+                <Route path='/dashboard'element={<Users/>}></Route>   
+                <Route path="/create-user"    element={<CreateUser updateCount={updateCount}/>}></Route>
+                <Route path='/users' element={<Users count={count} />}></Route>
+                <Route path='/profile/:id' element={<Profile />}></Route>
+                <Route path='/edit-user/:id' element={<EditUser updateCount={updateCount}/>}></Route>
             </Routes>
+            </div>
        
     )
 }

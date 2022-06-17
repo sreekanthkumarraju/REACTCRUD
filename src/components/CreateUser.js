@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {Formik,useFormik} from 'formik';
 import axios from 'axios'
 import {useNavigate} from 'react-router-dom'
 
-export default function CreateUser(){
+export default function CreateUser({updateCount}){
+    const[count,setCount]=useState(0)
     const navigate=useNavigate()
 
     const formik=useFormik({
@@ -19,6 +20,8 @@ export default function CreateUser(){
           console.log(values)
              postData(values)
            setSubmitting(false)
+           setCount(count+1)
+           updateCount(count+1)
            
     
         })

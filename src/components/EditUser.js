@@ -1,15 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
-export default function EditUser({getUserById}){
+export default function EditUser({updateCount}){
     const {id}=useParams()
-    const[userdata,setUserdata]=useState(()=>{
-        return getUserById(id)
-    })
-   
+    const[userdata,setUserdata]=useState([])
     const [selectedId,setId]=useState(id)
-    const user=getUserById(id)
+    const[count,setCount]=useState(0)
+   
+   
+    const getUsers=()=>{
+        axios.get(`https://629ef6b78b939d3dc28b227c.mockapi.io/usersapi/${id}`)
+        .then((res)=>{
+            setUserdata(res.data)
+            console.log(res.data)
+            console.log(userdata)
+        })
+        .catch((error)=>{
+            console.log(error)
+        })
+        }
+    
+      useEffect(()=>{
+           getUsers()
+      },[])
+   
+   
+    
     const navigate=useNavigate()
      const handleChange=(event)=>{
         let name=event.target.name
@@ -31,6 +48,8 @@ export default function EditUser({getUserById}){
                .then((res)=>{
                      console.log(res)
                      navigate('/users')
+                     setCount(count+1)
+                     updateCount(count+1)
                })
                  .catch((err)=>{
                   console.log(err)

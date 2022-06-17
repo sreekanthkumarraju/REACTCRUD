@@ -20,7 +20,7 @@ table{
 
 #border{
   border:2px solid rgba(66, 65, 66, 0.856);
- padding: 100px;
+ /* padding: 100px; */
 }
  #tr,#td,#th{
   border:2px solid rgba(66, 65, 66, 0.856);

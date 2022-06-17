@@ -2,12 +2,29 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams,useNavigate } from "react-router-dom";
 import axios from 'axios'
 
-export default function Profile({getUserById}){
-    const [count,setCount]=useState(0)
+export default function Profile(){
+   
     const {id}=useParams()
     const navigate=useNavigate()
+    const[user,setUsers]=useState({})
+
+    const getUsers=()=>{
+     axios.get(`https://629ef6b78b939d3dc28b227c.mockapi.io/usersapi/${id}`)
+     .then((res)=>{
+         setUsers(res.data)
+         console.log(res.data)
+         console.log(user)
+     })
+     .catch((error)=>{
+         console.log(error)
+     })
+     }
+ 
+   useEffect(()=>{
+        getUsers()
+   },[])
         
-    const user=getUserById(id)
+    
 
 
     const deleteUser=(id)=>{
